@@ -17,6 +17,10 @@ const CONFIG = {
   bio: "15 year old software developer from canada passionate about engineering, video games, and building innovative projects. founder of federate, serving 1,500+ users.",
   github: "xanzplug",
   lastfm: { user: "XanzDevelops", apiKey: "c5c9923611cfe428d19dc86c6f0c76d4" },
+  artistPhotos: {
+    "Che": "https://lastfm.freetls.fastly.net/i/u/500x500/25f9e8603cac4565e0c7ba9c21e2dfaa.jpg",
+    "Lucy Bedroque": "https://lastfm.freetls.fastly.net/i/u/500x500/f36572fa478c812f98b1c28d46d89f30.jpg",
+  },
 
   links: [
     { label: "discord", icon: "discord", url: "https://discord.com/users/718601997225426998" },
@@ -584,7 +588,7 @@ async function loadTop() {
 
 let jsonpId = 0;
 function deezer(path, q) {
-  const k = "xz-dz:" + path + ":" + q;
+  const k = "xz-dz2:" + path + ":" + q;
   try { const hit = sessionStorage.getItem(k); if (hit !== null) return Promise.resolve(JSON.parse(hit)); } catch {}
   return new Promise(resolve => {
     const cb = "__dz" + (++jsonpId);
@@ -602,15 +606,48 @@ function deezer(path, q) {
     setTimeout(() => window[cb] && done(null), 6000);
   });
 }
+const realPic = url => url && !url.includes("/artist//") && !url.includes("/images/artist/d41d8cd98f00b204e9800998ecf8427e");
 async function artistPhoto(name) {
-  const a = await deezer("artist", name);
-  if (a?.picture_xl && !a.picture_xl.includes("/artist//")) return a.picture_xl;
+  const override = Object.entries(CONFIG.artistPhotos || {}).find(([k]) => k.toLowerCase() === name.toLowerCase());
+  if (override) return override[1];
+  const same = s => (s || "").toLowerCase() === name.toLowerCase();
+
+  let topAlbum = "", topCover = "";
   try {
     const top = await lfmArtist("artist.gettopalbums", name);
-    const img = top?.topalbums?.album?.[0]?.image?.[3]?.["#text"];
-    if (img && !img.includes("2a96cbd8b46e442fc41c2b86b821562f")) return img;
+    const al = top?.topalbums?.album?.[0];
+    topAlbum = al?.name || "";
+    const img = al?.image?.[3]?.["#text"];
+    if (img && !img.includes("2a96cbd8b46e442fc41c2b86b821562f")) topCover = img;
   } catch {}
-  return "";
+
+  if (topAlbum) {
+    const res = await deezerAll("album", `artist:"${name}" album:"${topAlbum}"`);
+    const hit = res.find(r => same(r.artist?.name));
+    if (realPic(hit?.artist?.picture_xl)) return hit.artist.picture_xl;
+  }
+  const artists = (await deezerAll("artist", name)).filter(a => same(a.name)).sort((a, b) => (b.nb_fan || 0) - (a.nb_fan || 0));
+  if (realPic(artists[0]?.picture_xl)) return artists[0].picture_xl;
+  return topCover;
+}
+function deezerAll(path, q) {
+  const k = "xz-dza2:" + path + ":" + q;
+  try { const hit = sessionStorage.getItem(k); if (hit !== null) return Promise.resolve(JSON.parse(hit)); } catch {}
+  return new Promise(resolve => {
+    const cb = "__dz" + (++jsonpId);
+    const s = document.createElement("script");
+    const done = val => {
+      delete window[cb];
+      s.remove();
+      try { sessionStorage.setItem(k, JSON.stringify(val)); } catch {}
+      resolve(val);
+    };
+    window[cb] = res => done(res?.data || []);
+    s.onerror = () => done([]);
+    s.src = `https://api.deezer.com/search/${path}?q=${encodeURIComponent(q)}&limit=10&output=jsonp&callback=${cb}`;
+    document.head.appendChild(s);
+    setTimeout(() => window[cb] && done([]), 6000);
+  });
 }
 async function trackCover(track, artist) {
   const t = await deezer("track", `artist:"${artist}" track:"${track}"`) || await deezer("track", `${artist} ${track}`);
