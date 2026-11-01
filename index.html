@@ -564,14 +564,61 @@ async function loadTop() {
   const data = await lfm(key[0], `&period=${per}&limit=8`);
   const items = data[key[1]]?.[key[2]] || [];
   if (!items.length) { g.innerHTML = `<div class="empty" style="grid-column:1/-1">nothing here yet.</div>`; return; }
-  g.innerHTML = items.map(it => {
+  g.innerHTML = items.map((it, i) => {
     let img = it.image?.[3]?.["#text"] || "";
     if (img.includes("2a96cbd8b46e442fc41c2b86b821562f")) img = "";
     const sub = type === "artists" ? "" : (it.artist?.name || it.artist?.["#text"] || "");
     return `<a class="alb" href="${esc(it.url)}" target="_blank" rel="noopener">
-      <div class="cv">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : esc((it.name || "?")[0])}</div>
+      <div class="cv" data-i="${i}">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : esc((it.name || "?")[0])}</div>
       <div class="t">${esc(it.name)}</div>${sub ? `<div class="s">${esc(sub)}</div>` : ""}<div class="n">${fmt(+it.playcount)} plays</div></a>`;
   }).join("");
+
+  items.forEach(async (it, i) => {
+    const cv = g.querySelector(`.cv[data-i="${i}"]`);
+    if (!cv || cv.querySelector("img")) return;
+    const artist = type === "artists" ? it.name : (it.artist?.name || it.artist?.["#text"] || "");
+    const pic = type === "artists" ? await artistPhoto(artist) : await trackCover(it.name, artist);
+    if (pic && cv.isConnected) cv.innerHTML = `<img src="${esc(pic)}" alt="" loading="lazy">`;
+  });
+}
+
+let jsonpId = 0;
+function deezer(path, q) {
+  const k = "xz-dz:" + path + ":" + q;
+  try { const hit = sessionStorage.getItem(k); if (hit !== null) return Promise.resolve(JSON.parse(hit)); } catch {}
+  return new Promise(resolve => {
+    const cb = "__dz" + (++jsonpId);
+    const s = document.createElement("script");
+    const done = val => {
+      delete window[cb];
+      s.remove();
+      try { sessionStorage.setItem(k, JSON.stringify(val)); } catch {}
+      resolve(val);
+    };
+    window[cb] = res => done(res?.data?.[0] || null);
+    s.onerror = () => done(null);
+    s.src = `https://api.deezer.com/search/${path}?q=${encodeURIComponent(q)}&limit=1&output=jsonp&callback=${cb}`;
+    document.head.appendChild(s);
+    setTimeout(() => window[cb] && done(null), 6000);
+  });
+}
+async function artistPhoto(name) {
+  const a = await deezer("artist", name);
+  if (a?.picture_xl && !a.picture_xl.includes("/artist//")) return a.picture_xl;
+  try {
+    const top = await lfmArtist("artist.gettopalbums", name);
+    const img = top?.topalbums?.album?.[0]?.image?.[3]?.["#text"];
+    if (img && !img.includes("2a96cbd8b46e442fc41c2b86b821562f")) return img;
+  } catch {}
+  return "";
+}
+async function trackCover(track, artist) {
+  const t = await deezer("track", `artist:"${artist}" track:"${track}"`) || await deezer("track", `${artist} ${track}`);
+  return t?.album?.cover_xl || "";
+}
+async function lfmArtist(method, artist) {
+  const r = await fetch(`https://ws.audioscrobbler.com/2.0/?method=${method}&artist=${encodeURIComponent(artist)}&api_key=${CONFIG.lastfm.apiKey}&format=json&limit=1`);
+  return r.json();
 }
 
 let ghLoaded = false;
