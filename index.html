@@ -619,6 +619,7 @@ const lfImg = it => {
 const artistOf = it => it?.artist?.name || it?.artist?.["#text"] || "";
 const PERIODS = [["7day", "last 7 days", 7], ["1month", "last 30 days", 30], ["3month", "last 3 months", 90], ["12month", "last year", 365], ["overall", "all time", 0]];
 const TAG_SKIP = new Set(["seen live", "favorites", "favourites", "favorite", "my favorites", "spotify", "beautiful", "awesome", "love", "female vocalists", "male vocalists", "american", "usa", "canadian", "british", "uk", "french", "00s", "10s", "2010s", "2020s", "90s", "under 2000 listeners", "all", "music", "rapper", "check out"]);
+const GENRE_RE = /rap|hip.?hop|trap|plugg|rage|rock|pop|r&b|rnb|soul|jazz|metal|punk|emo|house|techno|edm|electro|drill|phonk|indie|alternative|folk|country|ambient|wave|core|grime|funk|disco|dance|bass|step|classical|lo-?fi|garage|jersey|club|crank|experimental|underground|psych|shoegaze|grunge|blues|reggae|latin|afro|dub|synth|noise|cloud|singer|songwriter|acoustic|gospel|opera|soundtrack|chill|j-?pop|k-?pop/;
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
 let musicLoaded = false, mPeriod = "7day", mType = "albums", recent = [], topSeq = 0, genreSeq = 0;
@@ -629,7 +630,7 @@ function setCover(cv, url, name) {
   const img = new Image();
   img.alt = "";
   img.decoding = "async";
-  img.onload = () => requestAnimationFrame(() => img.classList.add("in"));
+  img.onload = () => img.classList.add("in");
   img.onerror = () => { cv.textContent = (name || "?").trim()[0] || "?"; };
   img.src = url;
   cv.replaceChildren(img);
@@ -638,6 +639,9 @@ function setCover(cv, url, name) {
 function countTo(el, target) {
   const from = +(el.dataset.v || 0), start = performance.now(), dur = 800;
   el.dataset.v = target;
+  el.textContent = target.toLocaleString("en-US");
+  if (document.hidden) return;
+  el.textContent = from.toLocaleString("en-US");
   const step = now => {
     const t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
     el.textContent = Math.round(from + (target - from) * e).toLocaleString("en-US");
@@ -828,7 +832,7 @@ async function loadGenres() {
     const counts = {};
     await Promise.all(arts.map(async a => {
       (await artistTags(a.name)).slice(0, 3).forEach(tag => {
-        if (TAG_SKIP.has(tag) || tag === a.name.toLowerCase()) return;
+        if (TAG_SKIP.has(tag) || tag === a.name.toLowerCase() || !GENRE_RE.test(tag)) return;
         counts[tag] = (counts[tag] || 0) + +a.playcount;
       });
     }));
