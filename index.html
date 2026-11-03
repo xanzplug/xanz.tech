@@ -188,7 +188,7 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
 .btn{display:inline-flex;align-items:center;gap:9px;padding:9px 17px;border-radius:12px;background:var(--tile);border:1px solid var(--line2);font-size:14.5px;font-weight:500;transition:background .2s,border-color .2s,transform .2s;backdrop-filter:blur(12px)}
 .btn:hover{background:rgba(40,40,46,.85);border-color:rgba(255,255,255,.22);transform:translateY(-1px)}
-.btn img{width:17px;height:17px;border-radius:5px}
+.btn img{width:18px;height:18px;filter:grayscale(1) brightness(2.2) contrast(4);mix-blend-mode:screen}
 .btn .ic{width:16px;height:16px}
 
 .activity{display:flex;gap:12px;align-items:center;padding:12px;margin-top:20px}
@@ -246,7 +246,7 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 .tile .go .ic{width:14px;height:14px;color:inherit}
 .tile.link:hover .go{opacity:1;transform:none}
 @media (hover:none){.tile .go{opacity:.6;transform:none}}
-.tile .ic{width:18px;height:18px;color:#ececf0}
+.tile .ic{width:18px;height:18px;color:#fff}
 @media (max-width:440px){.tile{flex-basis:calc(50% - 8px)}}
 .rows{display:grid;gap:8px}
 .rows .tile{flex:none}
