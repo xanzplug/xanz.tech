@@ -4,7 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>xanz</title>
-<meta name="description" content="xanz - software developer from canada.">
+<meta name="description" content="15 year old software developer from canada passionate about engineering, video games, and building innovative projects. founder of federate, serving 1,500+ users.">
+<meta name="theme-color" content="#5b9cff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="xanz.tech">
+<meta property="og:url" content="https://xanz.tech/">
+<meta property="og:title" content="xanz">
+<meta property="og:description" content="15 year old software developer from canada passionate about engineering, video games, and building innovative projects. founder of federate, serving 1,500+ users.">
+<meta property="og:image" content="https://api.lanyard.rest/718601997225426998.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xanz">
+<meta name="twitter:description" content="15 year old software developer from canada passionate about engineering, video games, and building innovative projects. founder of federate, serving 1,500+ users.">
+<meta name="twitter:image" content="https://api.lanyard.rest/718601997225426998.png">
+<script id="discord:component-embed" type="application/json">{"component":{"type":17,"accent_color":6003967,"components":[{"type":9,"components":[{"type":10,"content":"# [xanz.tech](https://xanz.tech)\n15 year old software developer from canada passionate about engineering, video games, and building innovative projects.\n-# founder of federate, serving 1,500+ users."}],"accessory":{"type":11,"media":{"url":"https://api.lanyard.rest/718601997225426998.png"}}},{"type":1,"components":[{"type":2,"style":5,"label":"Projects","emoji":{"name":"📁"},"url":"https://xanz.tech/#projects"},{"type":2,"style":5,"label":"GitHub","emoji":{"name":"💻"},"url":"https://github.com/xanzplug"},{"type":2,"style":5,"label":"Discord","emoji":{"name":"💬"},"url":"https://discord.com/users/718601997225426998"}]}]}}</script>
 <link rel="icon" id="favicon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -382,7 +394,7 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 
   <section id="stack">
     <h2>stack</h2>
-    <p class="sub">software i ship with, and the setup i build on.</p>
+    <p class="sub">the setup i build on, and the software i ship with.</p>
     <div id="stackList"></div>
   </section>
 
@@ -632,10 +644,10 @@ const tile = (ic, name, url) => url
   ? `<a class="card tile link" href="${esc(url)}" target="_blank" rel="noopener">${icon(ic)}<span>${esc(name)}</span><i class="go">${icon("lucide:arrow-up-right")}</i></a>`
   : `<div class="card tile">${icon(ic)}<span>${esc(name)}</span></div>`;
 $("#stackList").innerHTML =
-  CONFIG.stack.map(g => `<div class="label">${esc(g.group)}</div><div class="tiles">` +
-    g.items.map(([name, ic, url]) => tile(ic, name, url)).join("") + `</div>`).join("") +
   CONFIG.setup.map(g => `<div class="label">${esc(g.group)}</div><div class="rows">` +
-    g.items.map(([ic, name, url]) => tile(ic, name, url)).join("") + `</div>`).join("");
+    g.items.map(([ic, name, url]) => tile(ic, name, url)).join("") + `</div>`).join("") +
+  CONFIG.stack.map(g => `<div class="label">${esc(g.group)}</div><div class="tiles">` +
+    g.items.map(([name, ic, url]) => tile(ic, name, url)).join("") + `</div>`).join("");
 
 async function lfm(method, extra = "") {
   const { user, apiKey } = CONFIG.lastfm;
