@@ -251,47 +251,76 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 .rows{display:grid;gap:8px}
 .rows .tile{flex:none}
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;padding:16px 8px}
-.stats b{display:block;font-size:18px;font-weight:600}
-.stats span{color:var(--muted);font-size:11.5px}
-.selects{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 14px}
-.sel{position:relative}
-.sel select{appearance:none;width:100%;padding:11px 14px;border-radius:14px;background:var(--tile);border:1px solid var(--line2);cursor:pointer;font-size:14px}
-.sel select option{background:#141418}
-.sel .ic{position:absolute;right:12px;top:50%;translate:0 -50%;color:var(--muted);pointer-events:none}
-.albums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.alb{min-width:0;display:block}
-@media (max-width:440px){.albums{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.alb .cv{aspect-ratio:1;border-radius:12px;overflow:hidden;border:1px solid var(--line2);background:#17171b;display:grid;place-items:center;font-size:22px;font-weight:600;color:var(--faint)}
-.alb .cv img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.alb:hover .cv img{transform:scale(1.05)}
-.alb .t{font-size:13px;font-weight:500;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.alb .s{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.alb .n{font-size:11px;color:var(--faint)}
+#music .label.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#music .label.row > span{color:var(--faint);font-size:11.5px}
+.fx{opacity:0;transform:translateY(8px);animation:fxin .6s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--d,0) * 45ms)}
+@keyframes fxin{to{opacity:1;transform:none}}
+.cv{display:grid;place-items:center;overflow:hidden;background:#1b1b20;color:var(--faint);font-weight:600;flex:none}
+.cv img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.cv img.in{opacity:1}
 
-.ghp{display:block;padding:16px}
-.ghp .top{display:flex;gap:12px;align-items:center}
-.ghp .top img{width:46px;height:46px;border-radius:50%}
-.ghp .top b{font-weight:500}
-.ghp .top p{color:var(--muted);font-size:13px}
-.ghs{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px;border-radius:12px;background:rgba(0,0,0,.25);text-align:center;padding:10px 0}
-.ghs div+div{border-left:1px solid var(--line)}
-.ghs b{display:block;font-size:17px;font-weight:600}.ghs span{font-size:11.5px;color:var(--muted)}
-.contrib{padding:14px 16px}
-.cgrid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px}
-.cgrid i{aspect-ratio:1;border-radius:3px;background:rgba(255,255,255,.06)}
-.cfoot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;color:var(--muted)}
-.cfoot b{color:var(--text);font-weight:500}
-.legend{display:flex;gap:3px;align-items:center}.legend i{width:9px;height:9px;border-radius:2px;background:rgba(255,255,255,.06)}
-.langbar{display:flex;height:8px;border-radius:8px;overflow:hidden;gap:2px}
-.langs{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12.5px;color:var(--muted)}
-.langs span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px}
-.repo{display:block;padding:13px 16px;margin-bottom:8px;transition:border-color .2s}
-.repo:hover{border-color:var(--line2)}
-.repo b{font-weight:500}.repo p{color:var(--muted);font-size:13px}
-.repo .m{display:flex;gap:14px;font-size:12px;color:var(--faint);margin-top:6px;align-items:center}
-.repo .m .ic{width:12px;height:12px}
-.dotc{width:8px;height:8px;border-radius:50%;display:inline-block}
+.mhead{display:flex;gap:14px;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line);min-height:81px}
+.mhead .cv{width:64px;height:64px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.mhead .meta{min-width:0;flex:1}
+.mhead .t{font-weight:600;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mhead .s{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mhead .w{color:var(--faint);font-size:12px;display:flex;align-items:center;gap:6px;margin-top:2px}
+.mhead .w.live{color:#1ed760}
+.mhead .bar{max-width:260px}
+
+.mstats{display:flex;align-items:baseline;gap:6px 16px;flex-wrap:wrap;padding:14px 0 2px;font-size:12.5px;color:var(--muted)}
+.mstats b{color:var(--text);font-weight:600;font-size:14px;margin-right:3px;font-variant-numeric:tabular-nums}
+.perwrap{margin-left:auto;position:relative}
+.per{background:none;border:0;color:var(--faint);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px;transition:color .2s}
+.per:hover{color:var(--text)}
+.per .ic{width:12px;height:12px;transition:transform .25s}
+.perwrap.open .per .ic{transform:rotate(180deg)}
+.permenu{position:absolute;right:0;top:calc(100% + 6px);z-index:10;min-width:150px;padding:5px;border-radius:12px;background:rgba(20,20,24,.96);border:1px solid var(--line2);backdrop-filter:blur(16px);opacity:0;transform:translateY(-4px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .2s,transform .2s}
+.perwrap.open .permenu{opacity:1;transform:none;pointer-events:auto}
+.permenu button{display:block;width:100%;text-align:left;padding:7px 10px;border:0;border-radius:8px;background:none;color:var(--muted);font-size:12.5px;cursor:pointer;transition:background .15s,color .15s}
+.permenu button:hover,.permenu button.on{background:rgba(255,255,255,.07);color:var(--text)}
+.mempty{color:var(--faint);font-size:12.5px}
+
+.rep{display:flex;align-items:center;gap:12px;padding:7px 8px;margin:0 -8px;border-radius:12px;transition:background .2s}
+.rep:hover{background:rgba(255,255,255,.05)}
+.rep .cv{width:40px;height:40px;border-radius:8px}
+.rep .meta{min-width:0;flex:1;display:flex;flex-direction:column}
+.rep b{font-weight:500;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rep small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rep .pc{font-size:11.5px;color:var(--muted);padding:2px 9px;border-radius:999px;border:1px solid var(--line2);flex:none}
+
+.mseg{position:relative;display:flex;padding:3px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.mseg button{position:relative;z-index:1;border:0;background:none;padding:3px 11px;font-size:12px;color:var(--muted);cursor:pointer;transition:color .25s}
+.mseg button.on{color:var(--text)}
+.mseg .spill{position:absolute;top:3px;bottom:3px;border-radius:7px;background:rgba(255,255,255,.1);transition:left .35s cubic-bezier(.3,.9,.3,1),width .35s cubic-bezier(.3,.9,.3,1)}
+.mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;transition:opacity .2s,transform .2s;min-height:120px}
+.mgrid.out,.chips.out{opacity:0;transform:translateY(4px)}
+.tcard{position:relative;display:block;aspect-ratio:1;border-radius:12px;overflow:hidden;background:#17171b;border:1px solid var(--line)}
+.tcard .cv{position:absolute;inset:0;font-size:28px;background:none}
+.tcard:hover img{transform:scale(1.06)}
+.tcard .ov{position:absolute;left:0;right:0;bottom:0;padding:30px 9px 8px;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;flex-direction:column}
+.tcard b{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcard small{font-size:10.5px;color:rgba(255,255,255,.65);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcard em{font-style:normal;font-size:10.5px;color:rgba(255,255,255,.55);max-height:0;opacity:0;transition:max-height .3s,opacity .3s}
+.tcard:hover em{max-height:16px;opacity:1}
+@media (max-width:440px){.mgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.strip{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:6px 2px;margin:-6px -2px;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+.strip::-webkit-scrollbar{display:none}
+.rc{flex:none;width:44px;height:44px;border-radius:8px;overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.rc .cv{width:100%;height:100%;font-size:14px}
+.rc:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.rc.now{box-shadow:0 0 0 2px #1ed760}
+.rcap{height:18px;margin-top:8px;font-size:12px;color:var(--muted);opacity:0;transform:translateY(-2px);transition:opacity .2s,transform .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rcap.on{opacity:1;transform:none}
+.rcap b{color:var(--text);font-weight:500}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;transition:opacity .2s,transform .2s}
+.gchip{position:relative;overflow:hidden;padding:4px 10px;border-radius:999px;font-size:12px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.gchip::before{content:"";position:absolute;top:0;bottom:0;left:0;width:var(--w);background:rgba(255,255,255,.09);transform-origin:left;animation:grow 1s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d,0) * 50ms)}
+@keyframes grow{from{transform:scaleX(0)}}
+.gchip span,.gchip small{position:relative}
+.gchip small{color:var(--faint);margin-left:5px;font-size:11px}
 
 #gear{position:fixed;right:16px;bottom:16px;z-index:30;width:44px;height:44px;border-radius:50%;display:none;place-items:center;background:rgba(20,20,24,.8);border:1px solid var(--line2);backdrop-filter:blur(12px);cursor:pointer}
 #panel{position:fixed;right:16px;bottom:72px;z-index:30;width:300px;max-width:calc(100vw - 32px);max-height:calc(100vh - 100px);overflow:auto;padding:16px;border-radius:18px;background:rgba(16,16,20,.94);border:1px solid var(--line2);backdrop-filter:blur(20px);display:none;font-size:13px}
@@ -350,14 +379,20 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
   <section id="music">
     <h2>music</h2>
     <p class="sub">what i've been listening to lately.</p>
-    <div id="nowPlaying"></div>
-    <div id="lfm"></div>
-  </section>
-
-  <section id="github">
-    <h2>github</h2>
-    <p class="sub">what i've been building in the open.</p>
-    <div id="gh"></div>
+    <div id="mHead" class="mhead"></div>
+    <div class="mstats" id="mStats">
+      <span><b>-</b>scrobbles</span><span><b>-</b>tracks</span><span><b>-</b>artists</span><span><b>-</b>albums</span>
+      <div class="perwrap" id="mPerWrap"><button class="per" id="mPer"></button><div class="permenu" id="mPerMenu"></div></div>
+    </div>
+    <div class="label row"><span style="color:var(--faint);font-size:12px">on repeat</span><span>10+ plays this week</span></div>
+    <div id="mRepeat"></div>
+    <div class="label row"><span style="color:var(--faint);font-size:12px">top</span><div class="mseg" id="mSeg"><i class="spill"></i><button data-t="albums" class="on">albums</button><button data-t="artists">artists</button><button data-t="tracks">tracks</button></div></div>
+    <div class="mgrid" id="mTop"></div>
+    <div class="label">recent</div>
+    <div class="strip" id="mRecent"></div>
+    <div class="rcap" id="mCap"></div>
+    <div class="label">genres</div>
+    <div class="chips" id="mGenres"></div>
   </section>
 </main>
 
@@ -405,7 +440,7 @@ function applyTheme() {
 }
 applyTheme();
 
-const TABS = [["home", "lucide:house"], ["projects", "lucide:folder"], ["stack", "lucide:layers"], ["music", "lucide:music-2"], ["github", "github"]];
+const TABS = [["home", "lucide:house"], ["projects", "lucide:folder"], ["stack", "lucide:layers"], ["music", "lucide:music-2"]];
 $("#nav").insertAdjacentHTML("beforeend", TABS.map(([id, ic]) => `<a href="#${id}" data-t="${id}">${icon(ic)}<span>${id}</span></a>`).join(""));
 
 function route() {
@@ -415,8 +450,7 @@ function route() {
   document.querySelectorAll("nav a").forEach(a => a.classList.toggle("on", a.dataset.t === tab));
   movePill();
   window.scrollTo(0, 0);
-  if (tab === "github") loadGitHub();
-  if (tab === "music") loadLastfm();
+  if (tab === "music") { loadLastfm(); requestAnimationFrame(moveSeg); }
 }
 function movePill() {
   const a = $("nav a.on");
@@ -426,6 +460,7 @@ function movePill() {
 }
 addEventListener("hashchange", route);
 addEventListener("resize", movePill);
+addEventListener("resize", () => typeof moveSeg === "function" && moveSeg());
 
 $("#dname").textContent = CONFIG.name;
 $("#uname").textContent = "@" + CONFIG.handle;
@@ -498,9 +533,7 @@ function renderDiscord() {
   startTick();
 }
 function renderNowPlaying() {
-  const d = lanyard;
-  $("#nowPlaying").innerHTML = `<div class="label">now playing</div>` +
-    (d?.listening_to_spotify && d.spotify ? spotifyCard(d.spotify).replace('class="card activity"', 'class="card activity" style="margin-top:0"') : `<div class="card empty">not listening to anything right now.</div>`);
+  if (musicLoaded) renderHead();
 }
 function startTick() {
   clearInterval(tick);
@@ -538,7 +571,6 @@ async function pollLanyard() {
   } catch {}
 }
 pollLanyard().then(connectLanyard);
-renderNowPlaying();
 
 $("#projList").innerHTML = CONFIG.projects.map(p => {
   const chips = (label, items) => items?.length ? `<div class="row"><b>${label}</b>${items.map(s => `<span class="chip">${esc(s)}</span>`).join("")}</div>` : "";
@@ -573,67 +605,251 @@ $("#stackList").innerHTML =
   CONFIG.setup.map(g => `<div class="label">${esc(g.group)}</div><div class="rows">` +
     g.items.map(([ic, name, url]) => tile(ic, name, url)).join("") + `</div>`).join("");
 
-let lfmLoaded = false;
 async function lfm(method, extra = "") {
   const { user, apiKey } = CONFIG.lastfm;
   const r = await fetch(`https://ws.audioscrobbler.com/2.0/?method=${method}&user=${encodeURIComponent(user)}&api_key=${apiKey}&format=json${extra}`);
   return r.json();
 }
-async function loadLastfm() {
-  if (lfmLoaded) return;
-  lfmLoaded = true;
-  const el = $("#lfm");
+
+const LF_STAR = "2a96cbd8b46e442fc41c2b86b821562f";
+const lfImg = it => {
+  const u = (it?.image || []).slice(-1)[0]?.["#text"] || "";
+  return u && !u.includes(LF_STAR) ? u : "";
+};
+const artistOf = it => it?.artist?.name || it?.artist?.["#text"] || "";
+const PERIODS = [["7day", "last 7 days", 7], ["1month", "last 30 days", 30], ["3month", "last 3 months", 90], ["12month", "last year", 365], ["overall", "all time", 0]];
+const TAG_SKIP = new Set(["seen live", "favorites", "favourites", "favorite", "my favorites", "spotify", "beautiful", "awesome", "love", "female vocalists", "male vocalists", "american", "usa", "canadian", "british", "uk", "french", "00s", "10s", "2010s", "2020s", "90s", "under 2000 listeners", "all", "music", "rapper", "check out"]);
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+let musicLoaded = false, mPeriod = "7day", mType = "albums", recent = [], topSeq = 0, genreSeq = 0;
+
+function setCover(cv, url, name) {
+  if (!cv || !cv.isConnected) return;
+  if (!url) { cv.textContent = (name || "?").trim()[0] || "?"; return; }
+  const img = new Image();
+  img.alt = "";
+  img.decoding = "async";
+  img.onload = () => requestAnimationFrame(() => img.classList.add("in"));
+  img.onerror = () => { cv.textContent = (name || "?").trim()[0] || "?"; };
+  img.src = url;
+  cv.replaceChildren(img);
+}
+
+function countTo(el, target) {
+  const from = +(el.dataset.v || 0), start = performance.now(), dur = 800;
+  el.dataset.v = target;
+  const step = now => {
+    const t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(from + (target - from) * e).toLocaleString("en-US");
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function loadLastfm() {
+  if (musicLoaded) return;
+  musicLoaded = true;
   if (!CONFIG.lastfm.user || !CONFIG.lastfm.apiKey) return;
-  el.innerHTML = `<div class="label">stats</div><div class="card stats skel" style="height:76px"></div>`;
-  try {
-    const info = (await lfm("user.getinfo")).user;
-    const months = Math.max(1, Math.round((Date.now() - info.registered.unixtime * 1000) / 2.63e9));
-    const span = months >= 12 ? `${Math.floor(months / 12)}y${months % 12 ? " " + months % 12 + "m" : ""}` : `${months}m`;
-    el.innerHTML = `<div class="label">stats</div>
-      <div class="card stats">
-        <div><b>${fmt(+info.playcount)}</b><span>scrobbles</span></div>
-        <div><b>${span}</b><span>tracked</span></div>
-        <div><b>${fmt(+info.track_count)}</b><span>tracks</span></div>
-        <div><b>${fmt(+info.artist_count)}</b><span>artists</span></div>
-      </div>
-      <div class="selects">
-        <div class="sel"><select id="lfType"><option value="albums">albums</option><option value="artists">artists</option><option value="tracks">tracks</option></select>${icon("lucide:chevron-down")}</div>
-        <div class="sel"><select id="lfPer"><option value="7day">last 7 days</option><option value="1month" selected>last 30 days</option><option value="3month">last 3 months</option><option value="12month">last year</option><option value="overall">all time</option></select>${icon("lucide:chevron-down")}</div>
-      </div>
-      <div class="albums" id="lfGrid"></div>`;
-    $("#lfType").onchange = $("#lfPer").onchange = loadTop;
+
+  $("#mPerMenu").innerHTML = PERIODS.map(([v, label]) => `<button data-p="${v}">${label}</button>`).join("");
+  $("#mPer").onclick = e => { e.stopPropagation(); $("#mPerWrap").classList.toggle("open"); };
+  document.addEventListener("click", () => $("#mPerWrap").classList.remove("open"));
+  $("#mPerMenu").querySelectorAll("button").forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    $("#mPerWrap").classList.remove("open");
+    if (mPeriod === b.dataset.p) return;
+    mPeriod = b.dataset.p;
+    loadStats(); loadTop(); loadGenres();
+  });
+  $("#mSeg").querySelectorAll("button").forEach(b => b.onclick = () => {
+    if (mType === b.dataset.t) return;
+    mType = b.dataset.t;
+    $("#mSeg").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+    moveSeg();
     loadTop();
+  });
+
+  renderHead();
+  loadRecent();
+  loadStats();
+  loadRepeat();
+  loadTop();
+  loadGenres();
+  setInterval(() => { if (!document.hidden) loadRecent(); }, 45000);
+}
+
+function moveSeg() {
+  const b = $("#mSeg button.on"), p = $("#mSeg .spill");
+  if (!b || !p) return;
+  p.style.left = b.offsetLeft + "px";
+  p.style.width = b.offsetWidth + "px";
+}
+
+function renderHead() {
+  const el = $("#mHead");
+  const sp = lanyard?.listening_to_spotify && lanyard.spotify;
+  let data;
+  if (sp) {
+    data = { key: "sp:" + sp.track_id, img: sp.album_art_url, title: sp.song, artist: sp.artist.replace(/;/g, ","), url: `https://open.spotify.com/track/${sp.track_id}`, live: true };
+  } else if (recent[0]) {
+    const t = recent[0], now = t["@attr"]?.nowplaying === "true";
+    data = { key: "lf:" + t.name + (t.date?.uts || "now"), img: lfImg(t), title: t.name, artist: artistOf(t), url: t.url, now, uts: t.date?.uts };
+  } else {
+    return;
+  }
+  if (el.dataset.key === data.key) {
+    if (data.uts) { const w = el.querySelector(".w"); if (w) w.textContent = "played " + ago(data.uts * 1000); }
+    return;
+  }
+  el.dataset.key = data.key;
+  const when = data.live
+    ? `<div class="w live"><span class="eq"><i></i><i></i><i></i></span>listening now</div><div class="bar"><i data-sp="bar"></i></div>`
+    : data.now ? `<div class="w live"><span class="eq"><i></i><i></i><i></i></span>now playing</div>`
+    : `<div class="w">played ${ago(data.uts * 1000)}</div>`;
+  el.innerHTML = `<a class="cv fx" href="${esc(data.url)}" target="_blank" rel="noopener"></a>
+    <div class="meta fx" style="--d:1"><div class="t">${esc(data.title)}</div><div class="s">${esc(data.artist)}</div>${when}</div>`;
+  const cv = el.querySelector(".cv");
+  if (data.img) setCover(cv, data.img, data.title);
+  else trackCover(data.title, data.artist).then(u => setCover(cv, u, data.title));
+  if (data.live) startTick();
+}
+
+async function loadStats() {
+  const p = PERIODS.find(x => x[0] === mPeriod);
+  $("#mPer").innerHTML = `${p[1]}${icon("lucide:chevron-down")}`;
+  $("#mPerMenu").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.p === mPeriod));
+  try {
+    let v;
+    if (mPeriod === "overall") {
+      const u = (await lfm("user.getinfo")).user;
+      v = [+u.playcount, +u.track_count, +u.artist_count, +u.album_count];
+    } else {
+      const from = Math.floor(Date.now() / 1000) - p[2] * 86400;
+      const [rt, tt, ta, tal] = await Promise.all([
+        lfm("user.getrecenttracks", `&from=${from}&limit=1`),
+        lfm("user.gettoptracks", `&period=${mPeriod}&limit=1`),
+        lfm("user.gettopartists", `&period=${mPeriod}&limit=1`),
+        lfm("user.gettopalbums", `&period=${mPeriod}&limit=1`),
+      ]);
+      v = [+rt.recenttracks["@attr"].total, +tt.toptracks["@attr"].total, +ta.topartists["@attr"].total, +tal.topalbums["@attr"].total];
+    }
+    $("#mStats").querySelectorAll("b").forEach((b, i) => countTo(b, v[i] || 0));
+  } catch {}
+}
+
+async function loadRepeat() {
+  const el = $("#mRepeat");
+  try {
+    const r = await lfm("user.gettoptracks", "&period=7day&limit=50");
+    const list = (r.toptracks?.track || []).filter(t => +t.playcount >= 10).slice(0, 6);
+    if (!list.length) { el.innerHTML = `<div class="mempty fx">nothing on repeat this week</div>`; return; }
+    el.innerHTML = list.map((t, i) => `<a class="rep fx" style="--d:${i}" href="${esc(t.url)}" target="_blank" rel="noopener">
+      <span class="cv" data-k="${i}"></span>
+      <span class="meta"><b>${esc(t.name)}</b><small>${esc(artistOf(t))}</small></span>
+      <span class="pc">${t.playcount} plays</span></a>`).join("");
+    list.forEach(async (t, i) => setCover(el.querySelector(`[data-k="${i}"]`), lfImg(t) || await trackCover(t.name, artistOf(t)), t.name));
   } catch {
-    el.innerHTML = `<div class="card empty">couldn't load last.fm right now.</div>`;
+    el.innerHTML = `<div class="mempty">couldn't load last.fm right now.</div>`;
   }
 }
+
 async function loadTop() {
-  const type = $("#lfType").value, per = $("#lfPer").value, g = $("#lfGrid");
-  g.innerHTML = Array(8).fill(`<div><div class="cv skel"></div></div>`).join("");
+  const seq = ++topSeq, g = $("#mTop"), type = mType;
+  g.classList.add("out");
   const key = {
     albums: ["user.gettopalbums", "topalbums", "album"],
     artists: ["user.gettopartists", "topartists", "artist"],
     tracks: ["user.gettoptracks", "toptracks", "track"],
   }[type];
-  const data = await lfm(key[0], `&period=${per}&limit=8`);
-  const items = data[key[1]]?.[key[2]] || [];
-  if (!items.length) { g.innerHTML = `<div class="empty" style="grid-column:1/-1">nothing here yet.</div>`; return; }
-  g.innerHTML = items.map((it, i) => {
-    let img = it.image?.[3]?.["#text"] || "";
-    if (img.includes("2a96cbd8b46e442fc41c2b86b821562f")) img = "";
-    const sub = type === "artists" ? "" : (it.artist?.name || it.artist?.["#text"] || "");
-    return `<a class="alb" href="${esc(it.url)}" target="_blank" rel="noopener">
-      <div class="cv" data-i="${i}">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : esc((it.name || "?")[0])}</div>
-      <div class="t">${esc(it.name)}</div>${sub ? `<div class="s">${esc(sub)}</div>` : ""}<div class="n">${fmt(+it.playcount)} plays</div></a>`;
-  }).join("");
-
+  let items = [];
+  try {
+    const [data] = await Promise.all([lfm(key[0], `&period=${mPeriod}&limit=8`), wait(200)]);
+    items = data[key[1]]?.[key[2]] || [];
+  } catch {}
+  if (seq !== topSeq) return;
+  g.innerHTML = items.length ? items.map((it, i) => {
+    const sub = type === "artists" ? "" : artistOf(it);
+    return `<a class="tcard fx" style="--d:${i}" href="${esc(it.url)}" target="_blank" rel="noopener">
+      <span class="cv" data-k="${i}"></span>
+      <span class="ov"><b>${esc(it.name)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}<em>${(+it.playcount).toLocaleString("en-US")} plays</em></span></a>`;
+  }).join("") : `<div class="mempty" style="grid-column:1/-1">nothing here yet</div>`;
+  g.classList.remove("out");
   items.forEach(async (it, i) => {
-    const cv = g.querySelector(`.cv[data-i="${i}"]`);
-    if (!cv || cv.querySelector("img")) return;
-    const artist = type === "artists" ? it.name : (it.artist?.name || it.artist?.["#text"] || "");
-    const pic = type === "artists" ? await artistPhoto(artist) : await trackCover(it.name, artist);
-    if (pic && cv.isConnected) cv.innerHTML = `<img src="${esc(pic)}" alt="" loading="lazy">`;
+    let pic = "";
+    if (type === "artists") pic = await artistPhoto(it.name);
+    else if (type === "albums") pic = lfImg(it) || await albumCover(it.name, artistOf(it));
+    else pic = await trackCover(it.name, artistOf(it)) || lfImg(it);
+    if (seq === topSeq) setCover(g.querySelector(`[data-k="${i}"]`), pic, it.name);
   });
+}
+
+async function loadRecent() {
+  const el = $("#mRecent"), cap = $("#mCap");
+  try {
+    const r = await lfm("user.getrecenttracks", "&limit=30");
+    const list = [].concat(r.recenttracks?.track || []);
+    const key = list.map(t => t.name + (t.date?.uts || "now")).join("|");
+    recent = list;
+    renderHead();
+    if (el.dataset.key === key) return;
+    el.dataset.key = key;
+    el.innerHTML = list.map((t, i) => {
+      const now = t["@attr"]?.nowplaying === "true";
+      const when = now ? "now playing" : ago(t.date.uts * 1000);
+      return `<a class="rc fx${now ? " now" : ""}" style="--d:${Math.min(i, 16)}" href="${esc(t.url)}" target="_blank" rel="noopener"
+        data-cap="${esc(`<b>${esc(t.name)}</b> · ${esc(artistOf(t))} · ${when}`)}"><span class="cv" data-k="${i}"></span></a>`;
+    }).join("");
+    el.querySelectorAll(".rc").forEach(a => {
+      a.onmouseenter = () => { cap.innerHTML = a.dataset.cap; cap.classList.add("on"); };
+      a.onmouseleave = () => cap.classList.remove("on");
+    });
+    list.forEach(async (t, i) => setCover(el.querySelector(`[data-k="${i}"]`), lfImg(t) || await trackCover(t.name, artistOf(t)), t.name));
+  } catch {}
+}
+
+async function artistTags(name) {
+  const k = "xz-tags:" + name;
+  try { const hit = sessionStorage.getItem(k); if (hit) return JSON.parse(hit); } catch {}
+  let tags = [];
+  try {
+    const r = await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&artist=${encodeURIComponent(name)}&api_key=${CONFIG.lastfm.apiKey}&format=json`).then(r => r.json());
+    tags = (r.toptags?.tag || []).filter(t => +t.count >= 30).slice(0, 4).map(t => t.name.toLowerCase().trim());
+  } catch {}
+  try { sessionStorage.setItem(k, JSON.stringify(tags)); } catch {}
+  return tags;
+}
+
+async function loadGenres() {
+  const seq = ++genreSeq, el = $("#mGenres");
+  el.classList.add("out");
+  try {
+    const r = await lfm("user.gettopartists", `&period=${mPeriod}&limit=25`);
+    const arts = r.topartists?.artist || [];
+    const counts = {};
+    await Promise.all(arts.map(async a => {
+      (await artistTags(a.name)).slice(0, 3).forEach(tag => {
+        if (TAG_SKIP.has(tag) || tag === a.name.toLowerCase()) return;
+        counts[tag] = (counts[tag] || 0) + +a.playcount;
+      });
+    }));
+    if (seq !== genreSeq) return;
+    const list = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const max = list[0]?.[1] || 1;
+    el.innerHTML = list.length
+      ? list.map(([g, n], i) => `<span class="gchip fx" style="--d:${i};--w:${Math.max(18, n / max * 100)}%"><span>${esc(g)}</span><small>${n.toLocaleString("en-US")}</small></span>`).join("")
+      : `<div class="mempty">no genres yet</div>`;
+  } catch {
+    el.innerHTML = `<div class="mempty">couldn't load genres right now.</div>`;
+  }
+  el.classList.remove("out");
+}
+
+function ago(d) {
+  const s = (Date.now() - new Date(d)) / 1000;
+  for (const [n, u] of [[31536000, "y"], [2592000, "mo"], [604800, "w"], [86400, "d"], [3600, "h"], [60, "m"]]) {
+    if (s >= n) return Math.floor(s / n) + u + " ago";
+  }
+  return "just now";
 }
 
 let jsonpId = 0;
@@ -699,6 +915,10 @@ function deezerAll(path, q) {
     setTimeout(() => window[cb] && done([]), 6000);
   });
 }
+async function albumCover(album, artist) {
+  const a = await deezer("album", `artist:"${artist}" album:"${album}"`) || await deezer("album", `${artist} ${album}`);
+  return a?.cover_xl || "";
+}
 async function trackCover(track, artist) {
   const t = await deezer("track", `artist:"${artist}" track:"${track}"`) || await deezer("track", `${artist} ${track}`);
   return t?.album?.cover_xl || "";
@@ -706,79 +926,6 @@ async function trackCover(track, artist) {
 async function lfmArtist(method, artist) {
   const r = await fetch(`https://ws.audioscrobbler.com/2.0/?method=${method}&artist=${encodeURIComponent(artist)}&api_key=${CONFIG.lastfm.apiKey}&format=json&limit=1`);
   return r.json();
-}
-
-let ghLoaded = false;
-const LANG = { JavaScript: "#f1e05a", TypeScript: "#3178c6", Python: "#3572A5", Lua: "#000080", Luau: "#00a2ff", HTML: "#e34c26", CSS: "#663399", Swift: "#F05138", Java: "#b07219", Go: "#00ADD8", Rust: "#dea584", Shell: "#89e051", Astro: "#ff5a03" };
-async function cached(url) {
-  const k = "xz-c:" + url;
-  try { const hit = JSON.parse(sessionStorage.getItem(k)); if (hit) return hit; } catch {}
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(r.status);
-  const j = await r.json();
-  try { sessionStorage.setItem(k, JSON.stringify(j)); } catch {}
-  return j;
-}
-function lvl(l) { return l ? `background:var(--accent);opacity:${[0, .35, .55, .78, 1][l]}` : ""; }
-function ago(d) {
-  const s = (Date.now() - new Date(d)) / 1000;
-  for (const [n, u] of [[31536000, "y"], [2592000, "mo"], [604800, "w"], [86400, "d"], [3600, "h"], [60, "m"]]) {
-    if (s >= n) return Math.floor(s / n) + u + " ago";
-  }
-  return "just now";
-}
-async function loadGitHub() {
-  if (ghLoaded) return;
-  ghLoaded = true;
-  const el = $("#gh"), u = CONFIG.github;
-  el.innerHTML = `<div class="label">profile</div><div class="card skel" style="height:140px"></div>`;
-  try {
-    const [user, repos] = await Promise.all([
-      cached(`https://api.github.com/users/${u}`),
-      cached(`https://api.github.com/users/${u}/repos?per_page=100&sort=pushed`),
-    ]);
-    const own = repos.filter(r => !r.fork);
-    const stars = own.reduce((s, r) => s + r.stargazers_count, 0);
-    const langs = {};
-    own.forEach(r => { if (r.language) langs[r.language] = (langs[r.language] || 0) + Math.max(1, r.size); });
-    const total = Object.values(langs).reduce((a, b) => a + b, 0);
-    const langList = Object.entries(langs).sort((a, b) => b[1] - a[1]).slice(0, 6);
-    el.innerHTML = `
-      <div class="label">profile</div>
-      <a class="card ghp" href="${esc(user.html_url)}" target="_blank" rel="noopener">
-        <div class="top"><img src="${esc(user.avatar_url)}" alt=""><div><b>@${esc(user.login)}</b><p>${esc(user.bio || "")}</p></div></div>
-        <div class="ghs"><div><b>${user.public_repos}</b><span>repos</span></div><div><b>${stars}</b><span>stars</span></div><div><b>${user.followers}</b><span>followers</span></div><div><b id="ctotal">-</b><span>contributions</span></div></div>
-      </a>
-      <div class="label">activity</div>
-      <div class="card contrib"><div class="cgrid" id="cgrid"></div>
-        <div class="cfoot"><span id="ctext">loading...</span><span class="legend">less ${[0, 1, 2, 3, 4].map(l => `<i style="${lvl(l)}"></i>`).join("")} more</span></div></div>
-      ${langList.length ? `<div class="label">languages</div><div class="card" style="padding:14px 16px">
-        <div class="langbar">${langList.map(([l, v]) => `<i style="flex:${v};background:${LANG[l] || "#888"}"></i>`).join("")}</div>
-        <div class="langs">${langList.map(([l, v]) => `<span style="--c:${LANG[l] || "#888"}">${esc(l)} ${(v / total * 100).toFixed(1)}%</span>`).join("")}</div></div>` : ""}
-      <div class="label">recent repos</div>
-      ${own.slice(0, 4).map(r => `<a class="card repo" href="${esc(r.html_url)}" target="_blank" rel="noopener">
-        <b>${esc(r.name)}</b>${r.description ? `<p>${esc(r.description)}</p>` : ""}
-        <div class="m">${r.language ? `<span style="display:flex;align-items:center;gap:5px"><i class="dotc" style="background:${LANG[r.language] || "#888"}"></i>${esc(r.language)}</span>` : ""}
-        <span style="display:flex;align-items:center;gap:4px">${icon("lucide:star")}${r.stargazers_count}</span><span>${ago(r.pushed_at)}</span></div></a>`).join("") || `<div class="card empty">no public repos yet.</div>`}`;
-    loadContrib(u);
-  } catch {
-    el.innerHTML = `<div class="card empty">couldn't reach github right now, try again in a bit.</div>`;
-    ghLoaded = false;
-  }
-}
-async function loadContrib(u) {
-  try {
-    const d = await cached(`https://github-contributions-api.jogruber.de/v4/${u}?y=last`);
-    let days = (d.contributions || []).slice(-26 * 7);
-    const start = new Date(days[0].date).getDay();
-    days = days.slice(start ? 7 - start : 0);
-    const sum = days.reduce((s, x) => s + x.count, 0);
-    $("#cgrid").innerHTML = days.map(x => `<i title="${x.count} on ${x.date}" style="${lvl(x.level)}"></i>`).join("");
-    $("#ctext").innerHTML = `<b>${sum}</b> contributions in the last 6 months`;
-    $("#ctotal").textContent = fmt(d.total?.lastYear ?? sum);
-  } catch {
-    $("#ctext").textContent = "activity unavailable";
-  }
 }
 
 if (new URLSearchParams(location.search).has("edit")) store.set("xz-edit", true);
