@@ -60,8 +60,8 @@ const CONFIG = {
       banner: { title: "federate", tagline: "the all-in-one discord management bot" },
       url: "https://discord.gg/92CgSvZMX7",
       desc: "all-in-one discord management bot with 350+ commands for moderation, music, utility and fun.",
-      role: "founder & developer", stack: ["node.js", "discord.js"],
-      stats: ["1,500+ users", "350+ commands", "listed on top.gg"],
+      role: "Founder & developer", stack: [["Node.js", "nodedotjs"], ["discord.js", "discorddotjs"]],
+      stats: ["live", "1,500+ users", "350+ commands", "listed on top.gg"],
       links: [{ label: "support server", url: "https://discord.gg/92CgSvZMX7" }, { label: "github", url: "https://github.com/xanzplug/federate" }],
     },
     {
@@ -70,7 +70,7 @@ const CONFIG = {
       banner: { image: "https://getwrap.pages.dev/assets/og.png" },
       url: "https://getwrap.pages.dev/",
       desc: "free mac app for creators. shot lists, your editing workspace and client delivery links in one place.",
-      role: "creator", stack: ["swift", "supabase"], stats: ["free", "macos"],
+      role: "Creator", stack: [["Swift", "swift"], ["Supabase", "supabase"]], stats: ["in development", "free", "macOS"],
       links: [{ label: "website", url: "https://getwrap.pages.dev/" }, { label: "github", url: "https://github.com/xanzplug/wrap" }],
     },
   ],
@@ -243,22 +243,29 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 .banner.gen .blurlogo{position:absolute;width:260px;height:260px;left:50%;top:50%;transform:translate(-50%,-50%);filter:blur(40px) saturate(1.4);opacity:.55;border-radius:50%}
 .banner.gen .wm{position:relative;font-size:56px;font-weight:700;letter-spacing:-.04em;line-height:1;text-shadow:0 6px 30px rgba(0,0,0,.5)}
 .banner.gen .tl{position:relative;font-size:14px;color:rgba(255,255,255,.75);margin-top:6px}
-.proj summary{list-style:none;display:flex;gap:14px;align-items:center;padding:14px 16px;cursor:pointer}
-.proj summary::-webkit-details-marker{display:none}
+.phead{all:unset;box-sizing:border-box;width:100%;display:flex;gap:14px;align-items:center;padding:14px 16px;cursor:pointer}
+.phead:focus-visible{outline:2px solid color-mix(in oklab,var(--hue) 60%,#fff);outline-offset:-2px;border-radius:20px}
 .proj .logo{width:42px;height:42px;border-radius:12px;object-fit:cover;flex:none;background:#111;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
 .proj .nm{font-weight:600;font-size:15px;display:flex;align-items:baseline;gap:8px}
 .proj .yr{font-size:11.5px;color:var(--faint);font-weight:400}
 .proj .d{color:var(--muted);font-size:13px;line-height:1.45}
-.proj .chev{margin-left:auto;color:var(--faint);transition:transform .25s}
-.proj details[open] .chev{transform:rotate(180deg)}
-.proj .more{padding:2px 16px 16px 72px;display:grid;gap:10px;font-size:13px}
-.proj .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.proj .row b{font-weight:400;color:var(--faint);width:46px}
-.chip{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:#d0d0d6}
-.proj .more a{display:inline-flex;align-items:center;gap:4px;color:var(--text);border-bottom:1px solid var(--line2)}
-.proj .more a:hover{border-color:var(--text)}
-.proj .more a .ic{width:12px;height:12px}
-@media (max-width:520px){.proj .more{padding-left:16px}.banner{height:150px}.banner.gen .wm{font-size:42px}}
+.proj .chev{margin-left:auto;color:var(--faint);transition:transform .45s cubic-bezier(.3,.9,.3,1),color .2s}
+.proj.open .chev{transform:rotate(180deg);color:var(--muted)}
+.pmore{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.3,.9,.3,1)}
+.proj.open .pmore{grid-template-rows:1fr}
+.pin{min-height:0;overflow:hidden}
+.ptable{margin:0 14px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.18);opacity:0;transform:translateY(-8px);transition:opacity .3s ease,transform .5s cubic-bezier(.3,.9,.3,1)}
+.proj.open .ptable{opacity:1;transform:none;transition-delay:.06s}
+.prow{display:grid;grid-template-columns:70px 1fr;align-items:center;gap:12px;padding:11px 14px;font-size:13.5px}
+.prow + .prow{border-top:1px solid rgba(255,255,255,.06)}
+.pk{color:var(--faint);font-size:13px}
+.pv{display:flex;flex-wrap:wrap;gap:6px;align-items:center;color:var(--text);min-width:0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:3px 10px;border-radius:8px;background:rgba(255,255,255,.07);color:#e4e4e8}
+.chip .ic{width:13px;height:13px;color:#fff}
+.plink{display:inline-flex;align-items:center;gap:4px;color:var(--text);border-bottom:1px solid var(--line2);margin-right:8px;transition:border-color .2s}
+.plink:hover{border-color:var(--text)}
+.plink .ic{width:12px;height:12px}
+@media (max-width:520px){.banner{height:150px}.banner.gen .wm{font-size:42px}.prow{grid-template-columns:56px 1fr}}
 
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
 .tile{display:flex;align-items:center;gap:9px;padding:8px 12px;font-size:13.5px;border-radius:11px;min-width:0;transition:border-color .2s,background .2s}
@@ -624,29 +631,35 @@ async function pollLanyard() {
 }
 pollLanyard().then(connectLanyard);
 
-$("#projList").innerHTML = CONFIG.projects.map(p => {
-  const chips = (label, items) => items?.length ? `<div class="row"><b>${label}</b>${items.map(s => `<span class="chip">${esc(s)}</span>`).join("")}</div>` : "";
+$("#projList").innerHTML = CONFIG.projects.map((p, n) => {
   let banner = "";
   if (p.banner?.image) {
     banner = `<a class="banner" href="${esc(p.url)}" target="_blank" rel="noopener"><img class="cover" src="${esc(p.banner.image)}" alt=""><div class="fade"></div></a>`;
   } else if (p.banner) {
     banner = `<a class="banner gen" href="${esc(p.url)}" target="_blank" rel="noopener"><img class="blurlogo" src="${esc(p.logo)}" alt=""><div><div class="wm">${esc(p.banner.title)}</div><div class="tl">${esc(p.banner.tagline)}</div></div><div class="fade"></div></a>`;
   }
+  const rows = [
+    p.role && ["role", esc(p.role)],
+    p.stack?.length && ["stack", p.stack.map(([name, ic]) => `<span class="chip">${icon(ic)}${esc(name)}</span>`).join("")],
+    p.stats?.length && ["stats", esc(p.stats.join(", "))],
+    p.links?.length && ["links", p.links.map(l => `<a class="plink" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}${icon("lucide:arrow-up-right")}</a>`).join("")],
+  ].filter(Boolean);
   return `<div class="proj" style="--hue:${esc(p.hue)}">
     ${banner}
-    <details>
-    <summary>
+    <button class="phead" aria-expanded="false" aria-controls="pm${n}">
       <img class="logo" src="${esc(p.logo)}" alt="">
       <div style="min-width:0"><div class="nm">${esc(p.name)} <span class="yr">${esc(p.year)}</span></div><div class="d">${esc(p.desc)}</div></div>
       <span class="chev">${icon("lucide:chevron-down")}</span>
-    </summary>
-    <div class="more">
-      ${p.role ? `<div class="row"><b>role</b>${esc(p.role)}</div>` : ""}
-      ${chips("stack", p.stack)}
-      ${chips("stats", p.stats)}
-      ${p.links?.length ? `<div class="row"><b>links</b>${p.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}${icon("lucide:arrow-up-right")}</a>`).join("")}</div>` : ""}
-    </div></details></div>`;
+    </button>
+    <div class="pmore" id="pm${n}"><div class="pin"><div class="ptable">
+      ${rows.map(([k, v]) => `<div class="prow"><span class="pk">${k}</span><span class="pv">${v}</span></div>`).join("")}
+    </div></div></div></div>`;
 }).join("");
+document.querySelectorAll(".proj .phead").forEach(btn => btn.onclick = () => {
+  const card = btn.closest(".proj"), open = !card.classList.contains("open");
+  card.classList.toggle("open", open);
+  btn.setAttribute("aria-expanded", open);
+});
 
 const tile = (ic, name, url) => url
   ? `<a class="card tile link" href="${esc(url)}" target="_blank" rel="noopener">${icon(ic)}<span>${esc(name)}</span><i class="go">${icon("lucide:arrow-up-right")}</i></a>`
