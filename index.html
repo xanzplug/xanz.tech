@@ -245,14 +245,13 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 .banner img.cover{width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform .6s}
 .proj:hover .banner img.cover{transform:scale(1.03)}
 .banner .fade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(14,14,17,.85))}
-.banner.gen{display:grid;place-items:center;text-align:center;background:radial-gradient(70% 90% at 50% 40%,color-mix(in oklab,var(--hue) 45%,transparent),transparent 70%),#0d0d10}
-.banner.gen .blurlogo{position:absolute;width:260px;height:260px;left:50%;top:50%;transform:translate(-50%,-50%);filter:blur(40px) saturate(1.4);opacity:.55;border-radius:50%}
+.banner.gen{display:grid;place-items:center;text-align:center;background:linear-gradient(160deg,color-mix(in oklab,var(--hue) 16%,#0d0d10),#0d0d10 70%)}
+.banner.gen .blurlogo{display:none}
 .banner.gen .wm{position:relative;font-size:56px;font-weight:700;letter-spacing:-.04em;line-height:1;text-shadow:0 6px 30px rgba(0,0,0,.5)}
 .banner.gen .bcont{position:relative;display:flex;flex-direction:column;align-items:center}
 .banner.gen .bicon{width:52px;height:52px;border-radius:13px;margin-bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.12);transition:transform .5s cubic-bezier(.3,.9,.3,1)}
 .proj:hover .banner.gen .bicon{transform:translateY(-2px) rotate(-3deg)}
 .banner.gen.grid::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1.2px);background-size:18px 18px;-webkit-mask-image:radial-gradient(70% 80% at 50% 45%,#000,transparent 75%);mask-image:radial-gradient(70% 80% at 50% 45%,#000,transparent 75%)}
-.banner.gen.grid .blurlogo{opacity:.35;filter:blur(50px)}
 .banner.gen.grid .wm{background:linear-gradient(180deg,#fff 30%,#a9adb8);-webkit-background-clip:text;background-clip:text;color:transparent}
 .banner.gen .tl{position:relative;font-size:14px;color:rgba(255,255,255,.75);margin-top:6px}
 .phead{all:unset;box-sizing:border-box;width:100%;display:flex;gap:14px;align-items:center;padding:14px 16px;cursor:pointer}
