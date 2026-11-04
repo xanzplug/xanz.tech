@@ -69,8 +69,8 @@ const CONFIG = {
     },
     {
       name: "wrap", year: "2026", hue: "#c8ccd6",
-      logo: "https://getwrap.pages.dev/assets/app-icon.png",
-      banner: { title: "wrap", tagline: "plan it. shoot it. wrap it.", icon: true, grid: true },
+      logo: "assets/wrap-tile.png",
+      banner: { title: "wrap", tagline: "plan it. shoot it. wrap it.", icon: "assets/wrap-mark.png", grid: true },
       url: "https://getwrap.pages.dev/",
       desc: "free mac app for creators. shot lists, your editing workspace and client delivery links in one place.",
       role: "Creator", stack: [["Swift", "swift"], ["Supabase", "supabase"]], stats: ["in development", "free", "macOS"],
@@ -249,7 +249,7 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 .banner.gen .blurlogo{display:none}
 .banner.gen .wm{position:relative;font-size:56px;font-weight:700;letter-spacing:-.04em;line-height:1;text-shadow:0 6px 30px rgba(0,0,0,.5)}
 .banner.gen .bcont{position:relative;display:flex;flex-direction:column;align-items:center}
-.banner.gen .bicon{width:52px;height:52px;border-radius:13px;margin-bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.12);transition:transform .5s cubic-bezier(.3,.9,.3,1)}
+.banner.gen .bicon{width:46px;height:46px;object-fit:contain;margin-bottom:12px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.5));transition:transform .5s cubic-bezier(.3,.9,.3,1)}
 .proj:hover .banner.gen .bicon{transform:translateY(-2px) rotate(-3deg)}
 .banner.gen.grid::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1.2px);background-size:18px 18px;-webkit-mask-image:radial-gradient(70% 80% at 50% 45%,#000,transparent 75%);mask-image:radial-gradient(70% 80% at 50% 45%,#000,transparent 75%)}
 .banner.gen.grid .wm{background:linear-gradient(180deg,#fff 30%,#a9adb8);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -405,7 +405,7 @@ a,button{-webkit-tap-highlight-color:transparent}
   .activity{margin-top:16px}
   .banner{height:132px}
   .banner.gen .wm{font-size:40px}
-  .banner.gen .bicon{width:42px;height:42px;border-radius:11px;margin-bottom:8px}
+  .banner.gen .bicon{width:38px;height:38px;margin-bottom:8px}
   .banner.gen .tl{font-size:12.5px}
   .phead{padding:13px 14px;gap:12px}
   .proj .logo{width:40px;height:40px}
@@ -709,7 +709,7 @@ $("#projList").innerHTML = CONFIG.projects.map((p, n) => {
   if (p.banner?.image) {
     banner = `<a class="banner" href="${esc(p.url)}" target="_blank" rel="noopener"><img class="cover" src="${esc(p.banner.image)}" alt=""><div class="fade"></div></a>`;
   } else if (p.banner) {
-    banner = `<a class="banner gen${p.banner.grid ? " grid" : ""}" href="${esc(p.url)}" target="_blank" rel="noopener"><img class="blurlogo" src="${esc(p.logo)}" alt=""><div class="bcont">${p.banner.icon ? `<img class="bicon" src="${esc(p.logo)}" alt="">` : ""}<div class="wm">${esc(p.banner.title)}</div><div class="tl">${esc(p.banner.tagline)}</div></div><div class="fade"></div></a>`;
+    banner = `<a class="banner gen${p.banner.grid ? " grid" : ""}" href="${esc(p.url)}" target="_blank" rel="noopener"><img class="blurlogo" src="${esc(p.logo)}" alt=""><div class="bcont">${p.banner.icon ? `<img class="bicon" src="${esc(p.banner.icon)}" alt="">` : ""}<div class="wm">${esc(p.banner.title)}</div><div class="tl">${esc(p.banner.tagline)}</div></div><div class="fade"></div></a>`;
   }
   const rows = [
     p.role && ["role", esc(p.role)],
