@@ -442,20 +442,6 @@ a,button{-webkit-tap-highlight-color:transparent}
 @keyframes secOutM{from{opacity:1;filter:none}to{opacity:0;filter:blur(4px)}}
 @media (max-width:360px){.mstats{grid-template-columns:repeat(4,auto)}.perwrap{grid-column:1/-1;justify-self:start}.per{padding-left:0}}
 
-@property --acc{syntax:"<color>";inherits:true;initial-value:#9aa3b5}
-:root{--acc:#9aa3b5;transition:--acc 1.4s ease}
-#glow{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.4s ease;background:radial-gradient(90% 55% at 50% -8%,color-mix(in oklab,var(--acc) 38%,transparent),transparent 70%),radial-gradient(60% 40% at 50% 108%,color-mix(in oklab,var(--acc) 16%,transparent),transparent 70%)}
-body.tuned #glow{opacity:1}
-body.tuned nav .pill{background:color-mix(in oklab,var(--acc) 22%,rgba(255,255,255,.06));box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--acc) 35%,transparent)}
-body.tuned .ava img.pfp{box-shadow:0 0 0 2px color-mix(in oklab,var(--acc) 70%,transparent),0 0 26px color-mix(in oklab,var(--acc) 35%,transparent)}
-body.tuned .activity{border-color:color-mix(in oklab,var(--acc) 55%,rgba(255,255,255,.08));box-shadow:0 0 0 1px color-mix(in oklab,var(--acc) 45%,transparent),0 14px 40px -18px color-mix(in oklab,var(--acc) 70%,transparent)}
-body.tuned .activity .k,body.tuned .mhead .w.live{color:color-mix(in oklab,var(--acc) 80%,#fff)}
-body.tuned .bar i{background:color-mix(in oklab,var(--acc) 75%,#fff)}
-body.tuned .mhead .cv{box-shadow:0 8px 28px color-mix(in oklab,var(--acc) 45%,transparent)}
-body.tuned .mseg .spill{background:color-mix(in oklab,var(--acc) 26%,rgba(255,255,255,.06))}
-body.tuned .gchip::before{background:color-mix(in oklab,var(--acc) 30%,transparent)}
-body.tuned .rc.now{box-shadow:0 0 0 2px var(--acc)}
-body.tuned .ti.now::before{border-color:var(--acc)}
 
 .clock .wx{display:inline-flex;align-items:center;gap:4px}
 .clock .sep{opacity:.5}
@@ -463,7 +449,7 @@ body.tuned .ti.now::before{border-color:var(--acc)}
 .tl{position:relative;padding-left:24px;margin-top:4px}
 .tl::before{content:"";position:absolute;left:6px;top:8px;bottom:14px;width:1px;background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.04))}
 .ti{position:relative;padding-bottom:18px}
-.ti::before{content:"";position:absolute;left:-23px;top:5px;width:11px;height:11px;border-radius:50%;background:#0f0f12;border:2px solid rgba(255,255,255,.3);box-sizing:border-box;transition:border-color 1.4s}
+.ti::before{content:"";position:absolute;left:-23px;top:5px;width:11px;height:11px;border-radius:50%;background:#0f0f12;border:2px solid rgba(255,255,255,.3);box-sizing:border-box}
 .ti.now::before{border-color:#fff;animation:tlPulse 2.4s ease-out infinite}
 @keyframes tlPulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.35)}70%,100%{box-shadow:0 0 0 8px rgba(255,255,255,0)}}
 .ti .when{font-size:11.5px;color:var(--faint);letter-spacing:.02em}
@@ -477,12 +463,11 @@ body.tuned .ti.now::before{border-color:var(--acc)}
 #toast button{all:unset;cursor:pointer;color:var(--faint);display:grid;place-items:center;margin-left:2px}
 #toast button .ic{width:14px;height:14px}
 .confetti{position:fixed;z-index:59;width:22px;height:22px;pointer-events:none;will-change:transform,opacity}
-@media (prefers-reduced-motion:reduce){:root{transition:none}.ti.now::before{animation:none}}
+@media (prefers-reduced-motion:reduce){.ti.now::before{animation:none}}
 </style>
 </head>
 <body>
 <div id="bg"></div>
-<div id="glow"></div>
 <div id="grain"></div>
 <div id="toast"></div>
 
@@ -732,54 +717,6 @@ function renderDiscord() {
   $("#homeAct").innerHTML = d.listening_to_spotify && d.spotify ? spotifyCard(d.spotify) : game ? activityCard(game) : "";
   renderNowPlaying();
   startTick();
-  setAccent(d.listening_to_spotify && d.spotify ? d.spotify.album_art_url : "");
-}
-
-let accentSrc = null;
-function setAccent(url) {
-  if (url === accentSrc) return;
-  accentSrc = url;
-  if (!url) { document.body.classList.remove("tuned"); return; }
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.onload = () => {
-    if (accentSrc !== url) return;
-    try {
-      const c = document.createElement("canvas"); c.width = c.height = 32;
-      const x = c.getContext("2d", { willReadFrequently: true }); x.drawImage(img, 0, 0, 32, 32);
-      const px = x.getImageData(0, 0, 32, 32).data, bins = {};
-      for (let i = 0; i < px.length; i += 4) {
-        const r = px[i] / 255, g = px[i + 1] / 255, b = px[i + 2] / 255;
-        const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
-        if (l < .12 || l > .92) continue;
-        const s = d / (1 - Math.abs(2 * l - 1) || 1);
-        let hue = 0;
-        if (d) hue = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
-        const k = s < .18 ? "grey" : Math.round(((hue * 60 + 360) % 360) / 15);
-        const wgt = k === "grey" ? .25 : .4 + s;
-        const o = bins[k] || (bins[k] = { w: 0, r: 0, g: 0, b: 0 });
-        o.w += wgt; o.r += r * wgt; o.g += g * wgt; o.b += b * wgt;
-      }
-      const best = Object.entries(bins).sort((a, b) => b[1].w - a[1].w)[0];
-      let col = "#c8ccd6";
-      if (best && best[0] !== "grey") {
-        const o = best[1];
-        col = vivid(o.r / o.w, o.g / o.w, o.b / o.w);
-      }
-      document.documentElement.style.setProperty("--acc", col);
-      document.body.classList.add("tuned");
-    } catch { document.body.classList.remove("tuned"); }
-  };
-  img.onerror = () => document.body.classList.remove("tuned");
-  img.src = url;
-}
-function vivid(r, g, b) {
-  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
-  let hue = 0;
-  if (d) hue = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
-  hue = (hue * 60 + 360) % 360;
-  const l0 = (mx + mn) / 2, s0 = d / (1 - Math.abs(2 * l0 - 1) || 1);
-  return `hsl(${Math.round(hue)} ${Math.round(Math.min(.9, Math.max(.5, s0)) * 100)}% ${Math.round(Math.min(.72, Math.max(.6, l0)) * 100)}%)`;
 }
 function renderNowPlaying() {
   if (musicLoaded) renderHead();
