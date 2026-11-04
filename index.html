@@ -178,16 +178,17 @@ nav a:hover,nav a.on{color:var(--text)}
 nav .pill{position:absolute;top:4px;height:calc(100% - 8px);border-radius:999px;background:rgba(255,255,255,.09);transition:left .35s cubic-bezier(.3,.9,.3,1),width .35s cubic-bezier(.3,.9,.3,1);z-index:-1}
 @media (max-width:560px){nav a span{display:none}nav a{padding:8px 12px}nav a.on span{display:inline}}
 
-main{max-width:520px;margin:0 auto;padding:88px 16px 72px;min-height:100vh}
-section{display:none}
-section.on{display:block;opacity:0;transform:translateY(14px) scale(.985);filter:blur(8px)}
-section#home.on{display:flex;flex-direction:column;justify-content:center;min-height:calc(100vh - 160px)}
-section.on > *{opacity:0;transform:translateY(10px)}
-section.on.enter{opacity:1;transform:none;filter:none;transition:opacity .5s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1),filter .5s cubic-bezier(.2,.8,.2,1)}
-section.on.enter > *{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.2,.8,.2,1),transform .65s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i,0) * 45ms + 40ms)}
-section.on.enter.leave{opacity:0;transform:translateY(-8px) scale(.99);filter:blur(6px);transition:opacity .18s ease-in,transform .2s ease-in,filter .18s ease-in}
-section.on.enter.leave > *{transition-delay:0s}
-@media (prefers-reduced-motion:reduce){section.on,section.on > *{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
+main{max-width:520px;margin:0 auto;padding:88px 16px 72px;min-height:100vh;display:grid;align-content:start}
+section{display:none;grid-area:1/1;min-width:0}
+section.on,section.out{display:block}
+section#home.on,section#home.out{display:flex;flex-direction:column;justify-content:center;min-height:calc(100vh - 160px)}
+section.on{animation:secIn .42s cubic-bezier(.25,.8,.25,1) both}
+section.out{animation:secOut .3s cubic-bezier(.4,0,.6,1) both;pointer-events:none;z-index:0}
+@keyframes secIn{from{opacity:0;filter:blur(10px)}to{opacity:1;filter:blur(0)}}
+@keyframes secOut{from{opacity:1;filter:blur(0)}to{opacity:0;filter:blur(10px)}}
+section.on .rv{animation:rvIn .5s cubic-bezier(.25,.8,.25,1) both;animation-delay:var(--dl,0ms)}
+@keyframes rvIn{from{opacity:0;filter:blur(6px)}to{opacity:1;filter:blur(0)}}
+@media (prefers-reduced-motion:reduce){section.on,section.out,section.on .rv{animation:none!important}section.out{display:none!important}}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 .sub{color:var(--muted);font-size:13.5px;margin:2px 0 26px}
@@ -473,28 +474,34 @@ function route() {
   showSection(tab);
   if (tab === "music") loadLastfm();
 }
-let curTab = null, swapTimer = null;
+let curTab = null, outTimer = null;
+const REVEAL = "h2,.sub,.label,.who,.bio,.links > *,#homeAct,.proj,.tile,.mhead,.mstats,.rep,.mgrid,.strip,.chips";
 function showSection(tab) {
   const next = document.getElementById(tab);
   const prev = curTab && curTab !== tab ? document.getElementById(curTab) : null;
+  const first = curTab === null;
   curTab = tab;
-  clearTimeout(swapTimer);
-  const enter = () => {
-    document.querySelectorAll("section").forEach(s => { if (s !== next) s.classList.remove("on", "enter", "leave"); });
-    next.classList.remove("enter", "leave");
-    [...next.children].forEach((c, i) => c.style.setProperty("--i", Math.min(i, 10)));
-    next.classList.add("on");
-    window.scrollTo(0, 0);
-    void next.offsetWidth;
-    next.classList.add("enter");
-    if (tab === "music") requestAnimationFrame(moveSeg);
-  };
-  if (prev && prev.classList.contains("on")) {
-    prev.classList.add("leave");
-    swapTimer = setTimeout(enter, 190);
-  } else {
-    enter();
+  clearTimeout(outTimer);
+  document.querySelectorAll("section").forEach(s => {
+    if (s !== next && s !== prev) s.classList.remove("on", "out");
+  });
+  if (prev) {
+    prev.classList.remove("on");
+    prev.classList.add("out");
+    outTimer = setTimeout(() => prev.classList.remove("out"), 320);
   }
+  next.classList.remove("out", "on");
+  next.classList.add("on");
+  window.scrollTo(0, 0);
+  const top = next.getBoundingClientRect().top, span = Math.max(innerHeight - top, 1);
+  const els = [...next.querySelectorAll(REVEAL)];
+  els.forEach(el => el.classList.remove("rv"));
+  const ys = els.map(el => el.getBoundingClientRect().top - top);
+  els.forEach((el, i) => {
+    el.style.setProperty("--dl", Math.round(Math.min(Math.max(ys[i], 0) / span, 1) * 220 + (first ? 60 : 30)) + "ms");
+    el.classList.add("rv");
+  });
+  if (tab === "music") requestAnimationFrame(moveSeg);
 }
 function movePill() {
   const a = $("nav a.on");
