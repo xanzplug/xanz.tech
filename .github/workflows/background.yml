@@ -28,13 +28,13 @@ jobs:
           ffmpeg -y -loglevel error -i assets/bg.mp4 -vframes 1 -q:v 4 assets/bg.jpg
           rm raw.mp4
           v=$(sha1sum assets/bg.mp4 | cut -c1-8)
-          sed -E -i "s#assets/bg\.mp4(\?v=[a-f0-9]+)?\"#assets/bg.mp4?v=$v\"#; s#assets/bg\.jpg(\?v=[a-f0-9]+)?\"#assets/bg.jpg?v=$v\"#" index.html
+          sed -E -i "s#assets/bg\.mp4(\?v=[a-f0-9]+)?\"#assets/bg.mp4?v=$v\"#; s#assets/bg\.jpg(\?v=[a-f0-9]+)?\"#assets/bg.jpg?v=$v\"#" index.html 404.html
           ls -la assets
       - name: Commit
         run: |
-          if [ -z "$(git status --porcelain assets index.html)" ]; then echo "no change"; exit 0; fi
+          if [ -z "$(git status --porcelain assets index.html 404.html)" ]; then echo "no change"; exit 0; fi
           git config user.name "xanzplug"
           git config user.email "175267241+xanzplug@users.noreply.github.com"
-          git add assets/bg.mp4 assets/bg.jpg index.html
+          git add assets/bg.mp4 assets/bg.jpg index.html 404.html
           git commit -m "Update background video"
           git push

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · xanz</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#5b9cff">
+<link rel="icon" href="https://cdn.discordapp.com/embed/avatars/0.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0b;--text:#ededf0;--muted:#8e8e98;--faint:#64646d}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:Poppins,system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:grid;place-items:center;overflow:hidden}
+#bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg)}
+#bg video{position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(6px)}
+#bg .shade{position:absolute;inset:0;background:var(--bg);opacity:.7}
+#bg .vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.6))}
+#grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+main{text-align:center;padding:24px;animation:in .7s cubic-bezier(.25,.8,.25,1) both}
+@keyframes in{from{opacity:0;filter:blur(10px);transform:translateY(8px)}to{opacity:1;filter:none;transform:none}}
+.code{font-size:clamp(84px,22vw,150px);font-weight:700;letter-spacing:-.06em;line-height:1;background:linear-gradient(180deg,#fff 25%,rgba(255,255,255,.25));-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{font-size:18px;font-weight:600;margin-top:10px}
+p{color:var(--muted);font-size:14px;margin-top:4px}
+p code{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--faint);background:rgba(255,255,255,.05);padding:2px 6px;border-radius:6px;word-break:break-all}
+.btns{display:flex;gap:8px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+a{display:inline-flex;align-items:center;gap:8px;padding:9px 17px;border-radius:12px;color:var(--text);text-decoration:none;font-size:14px;font-weight:500;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.13);transition:background .2s,border-color .2s,transform .2s}
+a:hover{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.07));border-color:rgba(255,255,255,.24);transform:translateY(-1px)}
+a svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (prefers-reduced-motion:reduce){main{animation:none}}
+</style>
+</head>
+<body>
+<div id="bg"><video src="/assets/bg.mp4?v=cf6e032a" poster="/assets/bg.jpg?v=cf6e032a" autoplay muted loop playsinline></video><div class="shade"></div><div class="vig"></div></div>
+<div id="grain"></div>
+<main>
+  <div class="code">404</div>
+  <h1>this page doesn't exist</h1>
+  <p>nothing lives at <code id="path"></code></p>
+  <div class="btns">
+    <a href="/"><svg viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>go home</a>
+    <a href="/#projects"><svg viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-1.9h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>projects</a>
+  </div>
+</main>
+<script>document.getElementById("path").textContent = location.pathname;</script>
+</body>
+</html>
