@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>xanz</title>
 <meta name="description" content="15 year old software developer from canada passionate about engineering, video games, and building innovative projects. founder of federate, serving 1,500+ users.">
 <meta name="theme-color" content="#5b9cff">
@@ -165,7 +165,7 @@ img{display:block}
 .ic.br{fill:currentColor}
 .ic.br[data-i=electron] path{stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
 
-#bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg);transform:translateZ(0);contain:strict}
+#bg{position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;z-index:-2;overflow:hidden;background:var(--bg);transform:translateZ(0);contain:strict}
 #bg .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28}
 #bg .b1{width:55vmax;height:55vmax;left:-15vmax;top:-20vmax;background:var(--accent)}
 #bg .b2{width:45vmax;height:45vmax;right:-15vmax;top:10vmax;background:color-mix(in oklab,var(--accent),#ff3d7f 55%);opacity:.16}
@@ -174,7 +174,7 @@ img{display:block}
 #bg .vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.55))}
 #grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:2px;padding:4px;border-radius:999px;background:rgba(14,14,17,.7);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line);max-width:calc(100vw - 32px);overflow-x:auto;scrollbar-width:none}
+nav{position:fixed;top:max(12px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:2px;padding:4px;border-radius:999px;background:rgba(14,14,17,.7);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line);max-width:calc(100vw - 32px);overflow-x:auto;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
 nav a{position:relative;display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;color:var(--muted);font-size:13px;white-space:nowrap;transition:color .2s}
 nav a .ic{width:14px;height:14px}
@@ -337,6 +337,7 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 .mseg button{position:relative;z-index:1;border:0;background:none;padding:3px 11px;font-size:12px;color:var(--muted);cursor:pointer;transition:color .25s}
 .mseg button.on{color:var(--text)}
 .mseg .spill{position:absolute;top:3px;bottom:3px;border-radius:7px;background:rgba(255,255,255,.1);transition:left .35s cubic-bezier(.3,.9,.3,1),width .35s cubic-bezier(.3,.9,.3,1)}
+.mgrid > :nth-child(9){display:none}
 .mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;transition:opacity .2s,transform .2s;min-height:120px}
 .mgrid.out,.chips.out{opacity:0;transform:translateY(4px)}
 .tcard{position:relative;display:block;aspect-ratio:1;border-radius:12px;overflow:hidden;background:#17171b;border:1px solid var(--line)}
@@ -385,6 +386,52 @@ h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
 #panel .acts button.pri{background:var(--accent);border-color:transparent;color:#fff}
 .swatches{display:flex;gap:6px;margin-top:6px}
 .swatches button{width:22px;height:22px;border-radius:50%;border:2px solid transparent;cursor:pointer}
+
+html{-webkit-text-size-adjust:100%}
+a,button{-webkit-tap-highlight-color:transparent}
+@media (hover:none){.tile .go{opacity:0!important}.tcard em{max-height:16px;opacity:1}}
+@media (max-width:560px){
+  main{padding:calc(76px + env(safe-area-inset-top)) max(16px,env(safe-area-inset-left)) calc(56px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-right))}
+  section#home.on,section#home.out{min-height:calc(100svh - 150px)}
+  h2{font-size:24px}
+  .sub{margin-bottom:20px}
+  nav a{padding:9px 13px}
+  .who{gap:14px}
+  .ava{width:60px;height:60px}
+  .who h1{font-size:23px}
+  .bio{font-size:14px;margin-top:16px}
+  .links{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+  .btn{justify-content:center;padding:11px 14px}
+  .activity{margin-top:16px}
+  .banner{height:132px}
+  .banner.gen .wm{font-size:40px}
+  .banner.gen .bicon{width:42px;height:42px;border-radius:11px;margin-bottom:8px}
+  .banner.gen .tl{font-size:12.5px}
+  .phead{padding:13px 14px;gap:12px}
+  .proj .logo{width:40px;height:40px}
+  .proj .d{font-size:12.5px}
+  .ptable{margin:0 10px 10px}
+  .prow{grid-template-columns:52px 1fr;padding:10px 12px;font-size:13px;gap:10px}
+  .plink{padding:6px 0}
+  .mhead .cv{width:56px;height:56px}
+  .mstats{display:grid;grid-template-columns:repeat(4,auto) 1fr;gap:4px 12px}
+  .mstats > span{display:flex;flex-direction:column;line-height:1.25;font-size:11px}
+  .mstats b{font-size:15px;margin:0}
+  .perwrap{grid-column:5;align-self:center;justify-self:end}
+  .per{padding:8px 0 8px 8px}
+  .mseg button{padding:6px 12px}
+  .mgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .mgrid > :nth-child(9){display:block}
+  .tcard{border-radius:10px}
+  .tcard .ov{padding:22px 7px 6px}
+  .rc{width:48px;height:48px}
+  #bg .media{filter:none!important}
+  section.on{animation-name:secInM}
+  section.out{animation-name:secOutM}
+}
+@keyframes secInM{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:none}}
+@keyframes secOutM{from{opacity:1;filter:none}to{opacity:0;filter:blur(4px)}}
+@media (max-width:360px){.mstats{grid-template-columns:repeat(4,auto)}.perwrap{grid-column:1/-1;justify-self:start}.per{padding-left:0}}
 </style>
 </head>
 <body>
@@ -858,7 +905,7 @@ async function loadTop() {
   }[type];
   let items = [];
   try {
-    const [data] = await Promise.all([lfm(key[0], `&period=${mPeriod}&limit=8`), wait(200)]);
+    const [data] = await Promise.all([lfm(key[0], `&period=${mPeriod}&limit=9`), wait(200)]);
     items = data[key[1]]?.[key[2]] || [];
   } catch {}
   if (seq !== topSeq) return;
