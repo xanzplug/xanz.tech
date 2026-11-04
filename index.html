@@ -42,10 +42,11 @@ const CONFIG = {
   ],
 
   theme: {
-    background: "image",
+    background: "video",
     color: "#0a0a0b",
     image: "https://i.imgur.com/O4ONeHv.jpeg",
-    video: "",
+    video: "assets/bg.mp4",
+    poster: "assets/bg.jpg",
     blur: 2,
     dim: 72,
     accent: "#2853f4",
@@ -464,7 +465,7 @@ function applyTheme() {
   if (theme.background === "image" && theme.image) {
     bg.innerHTML = `<div class="media" style="background-image:url('${esc(theme.image)}');filter:blur(${theme.blur}px)"></div>${dim}`;
   } else if (theme.background === "video" && theme.video) {
-    bg.innerHTML = `<video class="media" src="${esc(theme.video)}" autoplay muted loop playsinline style="filter:blur(${theme.blur}px)"></video>${dim}`;
+    bg.innerHTML = `<video class="media" src="${esc(theme.video)}"${theme.poster ? ` poster="${esc(theme.poster)}"` : ""} autoplay muted loop playsinline preload="auto" style="filter:blur(${theme.blur}px)"></video>${dim}`;
   } else if (theme.background === "solid") {
     bg.innerHTML = "";
   } else {
