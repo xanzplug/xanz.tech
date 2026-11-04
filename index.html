@@ -160,6 +160,7 @@ img{display:block}
 .ic{width:16px;height:16px;flex:none}
 .ic.lu{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ic.br{fill:currentColor}
+.ic.br[data-i=electron] path{stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
 
 #bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg);transform:translateZ(0);contain:strict}
 #bg .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28}
@@ -446,7 +447,7 @@ function icon(name) {
     return d ? `<svg class="ic lu" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>` : "";
   }
   const d = BRAND[name];
-  return d ? `<svg class="ic br" viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>` : "";
+  return d ? `<svg class="ic br" data-i="${name}" viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>` : "";
 }
 
 let theme = { ...CONFIG.theme, ...(store.get("xz-theme") || {}) };
